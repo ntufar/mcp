@@ -70,14 +70,14 @@
 - [x] T018 [P] Security test audit logging in tests/security/test-audit-logging.ts
 
 ### Performance Tests
-- [ ] T019 [P] Performance test large directory listing in tests/performance/test-large-directories.ts
-- [ ] T020 [P] Performance test concurrent operations in tests/performance/test-concurrency.ts
-- [ ] T021 [P] Performance test memory usage in tests/performance/test-memory-usage.ts
+- [x] T019 [P] Performance test large directory listing in tests/performance/test-large-directories.ts
+- [x] T020 [P] Performance test concurrent operations in tests/performance/test-concurrency.ts
+- [x] T021 [P] Performance test memory usage in tests/performance/test-memory-usage.ts
 
 ### LLM Integration Tests
-- [ ] T022 [P] LLM integration test Claude client in tests/llm/test-claude-integration.ts
-- [ ] T023 [P] LLM integration test GPT-4 client in tests/llm/test-gpt4-integration.ts
-- [ ] T024 [P] LLM integration test Gemini client in tests/llm/test-gemini-integration.ts
+- [x] T022 [P] LLM integration test Claude client in tests/llm/test-claude-integration.ts
+- [x] T023 [P] LLM integration test GPT-4 client in tests/llm/test-gpt4-integration.ts
+- [x] T024 [P] LLM integration test Gemini client in tests/llm/test-gemini-integration.ts
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
