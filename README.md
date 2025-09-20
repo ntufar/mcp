@@ -328,6 +328,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for the MCP ecosystem**
+**Built with ❤️ by [Nicolai Tufar](https://github.com/ntufar) for the MCP ecosystem**
 
 *Empowering LLMs with secure, efficient file system access while maintaining the highest standards of security and performance.*
