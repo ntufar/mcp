@@ -1,0 +1,524 @@
+openapi: 3.0.3
+info:
+  title: MCP File Browser Server Tools
+  description: API contract for MCP File Browser Server tools
+  version: 1.0.0
+  contact:
+    name: MCP File Browser Server
+    url: https://github.com/ntufar/mcp
+
+servers:
+  - url: mcp://file-browser-server
+    description: MCP File Browser Server
+
+paths:
+  /tools/list_directory:
+    post:
+      summary: List directory contents
+      description: Returns a structured list of files and subdirectories with metadata
+      operationId: listDirectory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - path
+              properties:
+                path:
+                  type: string
+                  description: Canonical path to directory
+                  example: "/home/user/documents"
+                includeHidden:
+                  type: boolean
+                  description: Whether to include hidden files and directories
+                  default: false
+                maxDepth:
+                  type: integer
+                  description: Maximum directory depth to traverse
+                  minimum: 1
+                  maximum: 10
+                  default: 1
+                sortBy:
+                  type: string
+                  enum: [name, size, modified, type]
+                  description: Sort order for results
+                  default: "name"
+                sortOrder:
+                  type: string
+                  enum: [asc, desc]
+                  description: Sort direction
+                  default: "asc"
+      responses:
+        '200':
+          description: Directory listing successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  path:
+                    type: string
+                    description: Canonical directory path
+                  name:
+                    type: string
+                    description: Directory name
+                  files:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FileInfo'
+                  directories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DirectoryInfo'
+                  totalFiles:
+                    type: integer
+                    description: Total number of files
+                  totalDirectories:
+                    type: integer
+                    description: Total number of subdirectories
+                  totalSize:
+                    type: integer
+                    description: Total size in bytes
+                  permissions:
+                    $ref: '#/components/schemas/PermissionInfo'
+                  modifiedTime:
+                    type: string
+                    format: date-time
+                  isSymbolicLink:
+                    type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /tools/read_file:
+    post:
+      summary: Read file contents
+      description: Reads file contents with encoding detection and size validation
+      operationId: readFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - path
+              properties:
+                path:
+                  type: string
+                  description: Canonical path to file
+                  example: "/home/user/documents/example.txt"
+                encoding:
+                  type: string
+                  description: File encoding
+                  enum: [utf-8, utf-16, ascii, binary, auto]
+                  default: "auto"
+                maxSize:
+                  type: string
+                  description: Maximum file size (e.g., "10MB", "1GB")
+                  default: "100MB"
+                offset:
+                  type: integer
+                  description: Byte offset to start reading from
+                  minimum: 0
+                  default: 0
+                limit:
+                  type: integer
+                  description: Maximum number of bytes to read
+                  minimum: 1
+      responses:
+        '200':
+          description: File read successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  path:
+                    type: string
+                    description: Canonical file path
+                  name:
+                    type: string
+                    description: File name
+                  size:
+                    type: integer
+                    description: File size in bytes
+                  encoding:
+                    type: string
+                    description: Detected or specified encoding
+                  content:
+                    type: string
+                    description: File content
+                  contentType:
+                    type: string
+                    description: MIME type
+                  isTruncated:
+                    type: boolean
+                    description: Whether content was truncated
+                  contentHash:
+                    type: string
+                    description: SHA-256 hash of content
+                  permissions:
+                    $ref: '#/components/schemas/PermissionInfo'
+                  modifiedTime:
+                    type: string
+                    format: date-time
+                  isSymbolicLink:
+                    type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '413':
+          description: File too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /tools/search_files:
+    post:
+      summary: Search files
+      description: Search for files by name, extension, or content patterns
+      operationId: searchFiles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: Search query
+                  example: "configuration"
+                searchPath:
+                  type: string
+                  description: Base path to search from
+                  default: "/"
+                fileTypes:
+                  type: array
+                  items:
+                    type: string
+                  description: File extensions to search for
+                  example: [".json", ".yaml", ".conf"]
+                includeContent:
+                  type: boolean
+                  description: Whether to search file contents
+                  default: false
+                maxResults:
+                  type: integer
+                  description: Maximum number of results
+                  minimum: 1
+                  maximum: 1000
+                  default: 100
+                caseSensitive:
+                  type: boolean
+                  description: Whether search is case sensitive
+                  default: false
+      responses:
+        '200':
+          description: Search completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query:
+                    type: string
+                    description: Original search query
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FileInfo'
+                  totalResults:
+                    type: integer
+                    description: Total number of results found
+                  searchPath:
+                    type: string
+                    description: Base path searched
+                  duration:
+                    type: number
+                    description: Search duration in milliseconds
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /tools/get_file_metadata:
+    post:
+      summary: Get file metadata
+      description: Retrieve detailed metadata for a file or directory
+      operationId: getFileMetadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - path
+              properties:
+                path:
+                  type: string
+                  description: Canonical path to file or directory
+                  example: "/home/user/documents/example.txt"
+                includeContentHash:
+                  type: boolean
+                  description: Whether to compute content hash
+                  default: false
+      responses:
+        '200':
+          description: Metadata retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FileInfo'
+                  - $ref: '#/components/schemas/DirectoryInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /tools/check_permissions:
+    post:
+      summary: Check permissions
+      description: Verify access permissions for a file or directory
+      operationId: checkPermissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - path
+                - operation
+              properties:
+                path:
+                  type: string
+                  description: Canonical path to file or directory
+                  example: "/home/user/documents/example.txt"
+                operation:
+                  type: string
+                  enum: [read, write, execute, delete]
+                  description: Operation to check permissions for
+      responses:
+        '200':
+          description: Permission check completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  path:
+                    type: string
+                    description: Canonical path checked
+                  operation:
+                    type: string
+                    description: Operation checked
+                  allowed:
+                    type: boolean
+                    description: Whether operation is allowed
+                  permissions:
+                    $ref: '#/components/schemas/PermissionInfo'
+                  reason:
+                    type: string
+                    description: Reason if operation not allowed
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  schemas:
+    FileInfo:
+      type: object
+      properties:
+        path:
+          type: string
+          description: Canonical file path
+        name:
+          type: string
+          description: File name
+        size:
+          type: integer
+          description: File size in bytes
+        permissions:
+          $ref: '#/components/schemas/PermissionInfo'
+        modifiedTime:
+          type: string
+          format: date-time
+        createdTime:
+          type: string
+          format: date-time
+        contentType:
+          type: string
+          description: MIME type
+        encoding:
+          type: string
+          description: File encoding
+        isSymbolicLink:
+          type: boolean
+        targetPath:
+          type: string
+          description: Target path if symbolic link
+        isAccessible:
+          type: boolean
+        isReadable:
+          type: boolean
+        contentHash:
+          type: string
+          description: SHA-256 hash of file content
+
+    DirectoryInfo:
+      type: object
+      properties:
+        path:
+          type: string
+          description: Canonical directory path
+        name:
+          type: string
+          description: Directory name
+        permissions:
+          $ref: '#/components/schemas/PermissionInfo'
+        modifiedTime:
+          type: string
+          format: date-time
+        createdTime:
+          type: string
+          format: date-time
+        fileCount:
+          type: integer
+          description: Number of files in directory
+        subdirectoryCount:
+          type: integer
+          description: Number of subdirectories
+        totalSize:
+          type: integer
+          description: Total size in bytes
+        isSymbolicLink:
+          type: boolean
+        targetPath:
+          type: string
+          description: Target path if symbolic link
+        isAccessible:
+          type: boolean
+
+    PermissionInfo:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/PermissionSet'
+        group:
+          $ref: '#/components/schemas/PermissionSet'
+        other:
+          $ref: '#/components/schemas/PermissionSet'
+        owner:
+          type: string
+          description: File/directory owner
+        group:
+          type: string
+          description: File/directory group
+        sticky:
+          type: boolean
+          description: Sticky bit set
+        setuid:
+          type: boolean
+          description: Setuid bit set
+        setgid:
+          type: boolean
+          description: Setgid bit set
+
+    PermissionSet:
+      type: object
+      properties:
+        read:
+          type: boolean
+          description: Read permission
+        write:
+          type: boolean
+          description: Write permission
+        execute:
+          type: boolean
+          description: Execute permission
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Error message
+            details:
+              type: object
+              description: Additional error details
+            timestamp:
+              type: string
+              format: date-time
+            requestId:
+              type: string
+              description: Request identifier for tracking
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Forbidden:
+      description: Access forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  securitySchemes:
+    MCPProtocol:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: MCP protocol authentication

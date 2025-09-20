@@ -154,12 +154,27 @@ LLM Client → MCP Protocol → Security Validation → File System → Cache �
 
 ## 🧪 Testing
 
+### Comprehensive Testing Strategy
+- **Test-Driven Development (TDD)**: Tests written before implementation for all file system operations
+- **90%+ Code Coverage**: Mandatory coverage for file system operation modules
+- **Mock File Systems**: Deterministic unit tests using mock file systems
+- **Real LLM Integration**: Testing with actual LLM clients (Claude, GPT-4, Gemini, Qwen, OpenCode)
+
 ### Test Coverage
 - **Unit Tests**: Individual component testing with mock file systems
 - **Integration Tests**: End-to-end MCP protocol testing
-- **Security Tests**: Path traversal, permission boundary testing
-- **Performance Tests**: Large directory and file handling
+- **Security Tests**: Path traversal, permission boundary testing, attack prevention
+- **Performance Tests**: Large directory and file handling with specific benchmarks
 - **Concurrent Tests**: Multi-client operation testing
+- **Contract Tests**: API contract validation with OpenAPI specification
+- **LLM Integration Tests**: Real LLM client workflow validation
+
+### LLM Client Testing
+- **Universal Compatibility**: Testing across all major LLM platforms
+- **Workflow Validation**: Multi-step file analysis tasks with LLMs
+- **Error Handling**: LLM error recovery and user experience validation
+- **Performance Under Load**: Multiple LLM clients with concurrent operations
+- **User Experience**: Response quality and task completion efficiency
 
 ### Running Tests
 ```bash
@@ -171,6 +186,14 @@ npm run test:unit
 npm run test:integration
 npm run test:security
 npm run test:performance
+npm run test:contract
+npm run test:llm
+
+# Run LLM integration tests
+npm run test:llm:claude
+npm run test:llm:gpt4
+npm run test:llm:gemini
+npm run test:llm:qwen
 ```
 
 ## 📊 Performance Benchmarks
@@ -226,7 +249,9 @@ We follow strict development principles outlined in our [Constitution](./.specif
 6. Submit a pull request with security review
 
 ### Code Quality Requirements
-- **90%+ test coverage** for file system operations
+- **90%+ test coverage** for file system operations (constitutional requirement)
+- **Test-Driven Development (TDD)** mandatory for all file operations
+- **LLM integration testing** with real LLM clients
 - **Security-focused code reviews** for all file access code
 - **Performance benchmarks** maintained with each release
 - **Comprehensive documentation** for all public APIs
@@ -249,29 +274,41 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🗺️ Roadmap
 
-### Phase 1: Core Functionality ✅
-- [x] Basic directory listing and file reading
-- [x] Security and access control implementation
-- [x] MCP protocol compliance
+### Phase 1: Foundation & Planning ✅
+- [x] Project constitution and governance principles
+- [x] Comprehensive specification (64 requirements)
+- [x] Architecture design and data modeling
+- [x] API contracts and testing strategy
+- [x] LLM integration testing planning
 
-### Phase 2: Advanced Features 🚧
-- [ ] Advanced search capabilities
+### Phase 2: Core Implementation 🚧
+- [ ] Testing infrastructure setup (TDD approach)
+- [ ] Security layer implementation
+- [ ] File system interface development
+- [ ] MCP protocol integration
 - [ ] Performance optimization
-- [ ] Enhanced caching system
 
-### Phase 3: Enterprise Features 📋
+### Phase 3: Advanced Features 📋
+- [ ] LLM client integration testing
+- [ ] Advanced search capabilities
+- [ ] Enhanced caching system
+- [ ] Comprehensive test suite execution
+
+### Phase 4: Enterprise Features 📋
 - [ ] Multi-user support
 - [ ] Advanced monitoring and analytics
 - [ ] Enterprise security features
+- [ ] Production deployment
 
 ## 📈 Status
 
-**Current Status**: In Active Development
+**Current Status**: Planning Complete - Ready for Implementation
 
-- **Specification**: ✅ Complete (v1.0.0)
-- **Architecture**: 🚧 In Progress
-- **Core Implementation**: 📋 Planned
-- **Testing Suite**: 📋 Planned
+- **Specification**: ✅ Complete (v1.0.0) - 64 requirements (16 functional + 48 testing)
+- **Architecture**: ✅ Complete - Comprehensive data model and API contracts
+- **Testing Strategy**: ✅ Complete - TDD approach with LLM integration testing
+- **Implementation Plan**: ✅ Complete - 40-45 tasks with testing-first approach
+- **Core Implementation**: 📋 Ready to Begin
 - **Documentation**: 🚧 In Progress
 
 ---
