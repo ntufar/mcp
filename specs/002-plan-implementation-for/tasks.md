@@ -105,17 +105,17 @@
 - [x] T039 Cache invalidation service in src/services/CacheInvalidationService.ts
 
 ### MCP Protocol Handler
-- [ ] T040 MCP server setup in src/server/MCPServer.ts
-- [ ] T041 List directory tool in src/tools/ListDirectoryTool.ts
-- [ ] T042 Read file tool in src/tools/ReadFileTool.ts
-- [ ] T043 Search files tool in src/tools/SearchFilesTool.ts
-- [ ] T044 Get metadata tool in src/tools/GetMetadataTool.ts
-- [ ] T045 Check permissions tool in src/tools/CheckPermissionsTool.ts
+- [x] T040 MCP server setup in src/server/MCPServer.ts
+- [x] T041 List directory tool in src/tools/ListDirectoryTool.ts
+- [x] T042 Read file tool in src/tools/ReadFileTool.ts
+- [x] T043 Search files tool in src/tools/SearchFilesTool.ts
+- [x] T044 Get metadata tool in src/tools/GetFileMetadataTool.ts
+- [x] T045 Check permissions tool in src/tools/CheckPermissionsTool.ts
 
 ### Error Handling and Validation
-- [ ] T046 Input validation service in src/services/ValidationService.ts
-- [ ] T047 Error handling middleware in src/middleware/ErrorHandler.ts
-- [ ] T048 Response formatting service in src/services/ResponseService.ts
+- [x] T046 Input validation service in src/services/ValidationService.ts
+- [x] T047 Error handling middleware in src/middleware/ErrorHandler.ts
+- [x] T048 Response formatting service in src/services/ResponseService.ts
 
 ## Phase 3.4: Integration
 - [ ] T049 Connect services to file system operations
