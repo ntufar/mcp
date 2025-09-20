@@ -2,8 +2,6 @@
 
 A secure, high-performance Model Context Protocol (MCP) server that enables Large Language Models to safely browse and interact with local file systems. Built with security-first architecture and comprehensive access controls.
 
-**Author**: [Nicolai Tufar](https://github.com/ntufar)
-
 [![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-blue)](https://modelcontextprotocol.io)
 [![Security](https://img.shields.io/badge/Security-First-red)](./.specify/memory/constitution.md)
 [![Status](https://img.shields.io/badge/Status-In%20Development-yellow)](#status)
@@ -330,6 +328,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for the MCP ecosystem**
+**Built with ❤️ by [Nicolai Tufar](https://github.com/ntufar) for the MCP ecosystem**
 
 *Empowering LLMs with secure, efficient file system access while maintaining the highest standards of security and performance.*
