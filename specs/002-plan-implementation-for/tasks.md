@@ -82,40 +82,40 @@
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
 ### Data Models
-- [ ] T025 [P] Directory entity in src/models/Directory.ts
-- [ ] T026 [P] File entity in src/models/File.ts
-- [ ] T027 [P] PermissionInfo entity in src/models/PermissionInfo.ts
-- [ ] T028 [P] AccessLog entity in src/models/AccessLog.ts
-- [ ] T029 [P] Configuration entity in src/models/Configuration.ts
-- [ ] T030 [P] CacheEntry entity in src/models/CacheEntry.ts
+- [x] T025 [P] Directory entity in src/models/Directory.ts
+- [x] T026 [P] File entity in src/models/File.ts
+- [x] T027 [P] PermissionInfo entity in src/models/PermissionInfo.ts
+- [x] T028 [P] AccessLog entity in src/models/AccessLog.ts
+- [x] T029 [P] Configuration entity in src/models/Configuration.ts
+- [x] T030 [P] CacheEntry entity in src/models/CacheEntry.ts
 
 ### Security Layer
-- [ ] T031 Path validation service in src/services/PathValidationService.ts
-- [ ] T032 Permission checking service in src/services/PermissionService.ts
-- [ ] T033 Audit logging service in src/services/AuditLoggingService.ts
+- [x] T031 Path validation service in src/services/PathValidationService.ts
+- [x] T032 Permission checking service in src/services/PermissionService.ts
+- [x] T033 Audit logging service in src/services/AuditLoggingService.ts
 
 ### File System Interface
-- [ ] T034 Directory listing service in src/services/DirectoryService.ts
-- [ ] T035 File reading service in src/services/FileService.ts
-- [ ] T036 File search service in src/services/FileSearchService.ts
-- [ ] T037 Metadata retrieval service in src/services/MetadataService.ts
+- [x] T034 Directory listing service in src/services/DirectoryService.ts
+- [x] T035 File reading service in src/services/FileService.ts
+- [x] T036 File search service in src/services/FileSearchService.ts
+- [x] T037 Metadata retrieval service in src/services/MetadataService.ts
 
 ### Caching System
-- [ ] T038 Cache implementation in src/services/CacheService.ts
-- [ ] T039 Cache invalidation service in src/services/CacheInvalidationService.ts
+- [x] T038 Cache implementation in src/services/CacheService.ts
+- [x] T039 Cache invalidation service in src/services/CacheInvalidationService.ts
 
 ### MCP Protocol Handler
-- [ ] T040 MCP server setup in src/server/MCPServer.ts
-- [ ] T041 List directory tool in src/tools/ListDirectoryTool.ts
-- [ ] T042 Read file tool in src/tools/ReadFileTool.ts
-- [ ] T043 Search files tool in src/tools/SearchFilesTool.ts
-- [ ] T044 Get metadata tool in src/tools/GetMetadataTool.ts
-- [ ] T045 Check permissions tool in src/tools/CheckPermissionsTool.ts
+- [x] T040 MCP server setup in src/server/MCPServer.ts
+- [x] T041 List directory tool in src/tools/ListDirectoryTool.ts
+- [x] T042 Read file tool in src/tools/ReadFileTool.ts
+- [x] T043 Search files tool in src/tools/SearchFilesTool.ts
+- [x] T044 Get metadata tool in src/tools/GetFileMetadataTool.ts
+- [x] T045 Check permissions tool in src/tools/CheckPermissionsTool.ts
 
 ### Error Handling and Validation
-- [ ] T046 Input validation service in src/services/ValidationService.ts
-- [ ] T047 Error handling middleware in src/middleware/ErrorHandler.ts
-- [ ] T048 Response formatting service in src/services/ResponseService.ts
+- [x] T046 Input validation service in src/services/ValidationService.ts
+- [x] T047 Error handling middleware in src/middleware/ErrorHandler.ts
+- [x] T048 Response formatting service in src/services/ResponseService.ts
 
 ## Phase 3.4: Integration
 - [ ] T049 Connect services to file system operations
