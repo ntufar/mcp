@@ -179,16 +179,16 @@ LLM Client → MCP Protocol → Security Validation → File System → Cache �
 ```mermaid
 flowchart LR
   subgraph Client
-    A[LLM Client\n(Claude/GPT/Gemini/Ollama)]
+    A[LLM Client<br/>(Claude/GPT/Gemini/Ollama)]
   end
 
   subgraph Protocol
-    B[MCP Protocol\n(stdio/jsonrpc)]
+    B[MCP Protocol<br/>(stdio/jsonrpc)]
   end
 
   subgraph Server[MCP File Browser Server]
     direction TB
-    S1[MCPServer\n(Tools Router)] --> MW[ErrorHandler\nMiddleware]
+    S1[MCPServer<br/>(Tools Router)] --> MW[ErrorHandler<br/>Middleware]
 
     subgraph Services
       direction LR
@@ -215,7 +215,7 @@ flowchart LR
 
     subgraph Perf[Performance]
       C[CacheService]
-      CI[CacheInvalidation\n(chokidar)]
+      CI[CacheInvalidation<br/>(chokidar)]
       HM[HealthMonitoring]
       RM[ResourceManager]
     end
