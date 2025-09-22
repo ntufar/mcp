@@ -118,12 +118,12 @@
 - [x] T048 Response formatting service in src/services/ResponseService.ts
 
 ## Phase 3.4: Integration
-- [ ] T049 Connect services to file system operations
-- [ ] T050 Implement streaming for large files
-- [ ] T051 Set up health checks and monitoring
-- [ ] T052 Configure resource limits and throttling
-- [ ] T053 Implement graceful shutdown handling
-- [ ] T054 Set up configuration management
+- [x] T049 Connect services to file system operations
+- [x] T050 Implement streaming for large files
+- [x] T051 Set up health checks and monitoring
+- [x] T052 Configure resource limits and throttling
+- [x] T053 Implement graceful shutdown handling
+- [x] T054 Set up configuration management
 
 ## Phase 3.5: Polish
 - [ ] T055 [P] Unit tests for all services in tests/unit/
