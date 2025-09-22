@@ -186,3 +186,13 @@ The server implements rate limiting to prevent abuse:
 - Streaming support for large files
 - Intelligent caching with TTL
 - Memory usage: < 100MB for normal operations
+
+### LLM Integration
+
+This server can be used from multiple LLM clients that support MCP. See examples and guides:
+
+- Claude Desktop setup: `examples/llm-integration/claude-desktop.md`
+- OpenAI GPT-4 integration: `examples/llm-integration/openai-gpt.md`
+- Local LLM with Ollama: `examples/llm-integration/ollama-local.md`
+- Complete runnable demo: `npm run example:complete`
+- Integration tests runner: `npm run example:test`
