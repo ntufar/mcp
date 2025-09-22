@@ -126,9 +126,9 @@
 - [x] T054 Set up configuration management
 
 ## Phase 3.5: Polish
-- [ ] T055 [P] Unit tests for all services in tests/unit/
-- [ ] T056 [P] Unit tests for all models in tests/unit/models/
-- [ ] T057 [P] Unit tests for security components in tests/unit/security/
+- [x] T055 [P] Unit tests for all services in tests/unit/
+- [x] T056 [P] Unit tests for all models in tests/unit/models/
+- [x] T057 [P] Unit tests for security components in tests/unit/security/
 - [ ] T058 Performance optimization and benchmarking
 - [x] T059 [P] Update API documentation in docs/api.md
 - [x] T060 [P] Update quickstart guide with real examples
