@@ -427,6 +427,21 @@ After successful validation:
 4. **Document operational** procedures
 5. **Plan scaling** for increased load
 
+## LLM Client Quickstart
+
+You can use this server directly from several LLM clients that support MCP:
+
+- Claude Desktop: follow `examples/llm-integration/claude-desktop.md`
+- OpenAI GPT-4: follow `examples/llm-integration/openai-gpt.md`
+- Local LLM (Ollama): follow `examples/llm-integration/ollama-local.md`
+
+To run the complete example and integration tests:
+
+```bash
+npm run example:complete
+npm run example:test
+```
+
 ## Support
 
 For issues or questions:

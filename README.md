@@ -57,13 +57,35 @@ git clone https://github.com/ntufar/mcp.git
 cd mcp
 
 # Install dependencies
-# (Installation commands will be added)
+npm install
 
 # Configure the server
-# (Configuration instructions will be added)
+# (see docs/deployment.md for production configs, or use defaults for examples)
 
 # Start the server
-# (Start commands will be added)
+# Development (ts-node)
+npm run dev
+
+# Or build and run
+npm run build && npm start
+```
+
+### LLM Integration Examples
+
+You can try end-to-end examples with real LLM clients:
+
+- Claude Desktop: see `examples/llm-integration/claude-desktop.md`
+- OpenAI GPT-4: see `examples/llm-integration/openai-gpt.md`
+- Local LLM (Ollama): see `examples/llm-integration/ollama-local.md`
+
+Helper scripts:
+
+```bash
+# Run a complete demo that exercises the server end-to-end
+npm run example:complete
+
+# Run example integration tests (mock client over stdio)
+npm run example:test
 ```
 
 ## ⚙️ Configuration
@@ -152,6 +174,82 @@ const searchResults = await mcpClient.callTool('search_files', {
 LLM Client → MCP Protocol → Security Validation → File System → Cache → Response
 ```
 
+### Architecture Diagram
+
+```mermaid
+flowchart LR
+  subgraph Client
+    A["LLM Client (Claude/GPT/Gemini/Ollama)"]
+  end
+
+  subgraph Protocol
+    B["MCP Protocol (stdio/jsonrpc)"]
+  end
+
+  subgraph Server[MCP File Browser Server]
+    direction TB
+    S1["MCPServer (Tools Router)"] --> MW["ErrorHandler Middleware"]
+
+    subgraph Services
+      direction LR
+      PV[PathValidationService]
+      PM[PermissionService]
+      DL[DirectoryService]
+      FL[FileService]
+      FS[FileSearchService]
+      MD[MetadataService]
+      RS[ResponseService]
+      VL[ValidationService]
+    end
+
+    MW --> PV
+    PV --> PM
+    PM --> DL
+    PM --> FL
+    PM --> FS
+    PM --> MD
+    DL --> RS
+    FL --> RS
+    FS --> RS
+    MD --> RS
+
+    subgraph Perf[Performance]
+      C[CacheService]
+      CI["CacheInvalidation (chokidar)"]
+      HM[HealthMonitoring]
+      RM[ResourceManager]
+    end
+
+    DL <--> C
+    FL <--> C
+    FS <--> C
+    MD <--> C
+    CI --> C
+    HM --> S1
+    RM --> S1
+
+    subgraph Security[Security & Audit]
+      AL[AuditLoggingService]
+    end
+
+    S1 --> AL
+    DL --> AL
+    FL --> AL
+    FS --> AL
+    MD --> AL
+  end
+
+  subgraph OS[Operating System]
+    FSYS[(File System)]
+  end
+
+  A --> B --> S1
+  DL --> FSYS
+  FL --> FSYS
+  FS --> FSYS
+  MD --> FSYS
+```
+
 ## 🧪 Testing
 
 ### Comprehensive Testing Strategy
@@ -195,6 +293,12 @@ npm run test:llm:gpt4
 npm run test:llm:gemini
 npm run test:llm:qwen
 ```
+
+### Deployment
+
+For production deployment (systemd/launchd, config hardening, security best practices), see:
+
+- `docs/deployment.md`
 
 ## 📊 Performance Benchmarks
 
