@@ -174,6 +174,82 @@ const searchResults = await mcpClient.callTool('search_files', {
 LLM Client → MCP Protocol → Security Validation → File System → Cache → Response
 ```
 
+### Architecture Diagram
+
+```mermaid
+flowchart LR
+  subgraph Client
+    A[LLM Client\n(Claude/GPT/Gemini/Ollama)]
+  end
+
+  subgraph Protocol
+    B[MCP Protocol\n(stdio/jsonrpc)]
+  end
+
+  subgraph Server[MCP File Browser Server]
+    direction TB
+    S1[MCPServer\n(Tools Router)] --> MW[ErrorHandler\nMiddleware]
+
+    subgraph Services
+      direction LR
+      PV[PathValidationService]
+      PM[PermissionService]
+      DL[DirectoryService]
+      FL[FileService]
+      FS[FileSearchService]
+      MD[MetadataService]
+      RS[ResponseService]
+      VL[ValidationService]
+    end
+
+    MW --> PV
+    PV --> PM
+    PM --> DL
+    PM --> FL
+    PM --> FS
+    PM --> MD
+    DL --> RS
+    FL --> RS
+    FS --> RS
+    MD --> RS
+
+    subgraph Perf[Performance]
+      C[CacheService]
+      CI[CacheInvalidation\n(chokidar)]
+      HM[HealthMonitoring]
+      RM[ResourceManager]
+    end
+
+    DL <--> C
+    FL <--> C
+    FS <--> C
+    MD <--> C
+    CI --> C
+    HM --> S1
+    RM --> S1
+
+    subgraph Security[Security & Audit]
+      AL[AuditLoggingService]
+    end
+
+    S1 --> AL
+    DL --> AL
+    FL --> AL
+    FS --> AL
+    MD --> AL
+  end
+
+  subgraph OS[Operating System]
+    FSYS[(File System)]
+  end
+
+  A --> B --> S1
+  DL --> FSYS
+  FL --> FSYS
+  FS --> FSYS
+  MD --> FSYS
+```
+
 ## 🧪 Testing
 
 ### Comprehensive Testing Strategy
